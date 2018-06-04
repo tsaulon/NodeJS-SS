@@ -63,3 +63,33 @@ console.log();
  }
 
  console.log();
+
+ /************************************
+ *       Throwing Logic Errors       *
+ ************************************/
+
+ function divide(x, y)
+ {
+     if(y == 0)
+     {
+         //stops code execution and returns (throws) new Error object to be caught outside function scope.
+         throw new Error("Division by Zero!");
+     }
+
+     return x / y;
+ }
+
+ let n = 3, o = 0, p;
+
+ try
+ {
+     p = divide(n, o);
+ }
+ catch(e)   //catches exception thrown from inside divide function.
+ {
+     console.log("uh oh, an error occured: " + e.message);
+     //output: uh oh, an error occured: Division by Zero!
+     c = NaN;
+ }
+
+ console.log(n + " / " + o + " = " + p);

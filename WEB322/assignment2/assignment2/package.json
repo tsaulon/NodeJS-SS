@@ -1,0 +1,16 @@
+{
+  "name": "assignment2",
+  "version": "1.0.0",
+  "description": "Assignment 2 for WEB322",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Tyrone Saulon",
+  "license": "ISC"
+}

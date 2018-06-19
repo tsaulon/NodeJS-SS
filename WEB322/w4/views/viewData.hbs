@@ -1,0 +1,38 @@
+<body>
+    {{> welcome data}}
+    <h1>Built-in Helpers using HandlebarsJS</h1>
+    <table border='1'>
+        <tr>
+            <th>Index</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Occupation</th>
+            <th>Company</th>
+        </tr>
+        {{#each data}}
+            {{#if visible}}    <!--Execute this block if 'data.visible' is true-->
+                <tr>
+                    <td>{{@index}}</td> <!--"each" helper allows use of @index which refers to the index of the loop. (e.g. 0, 1, 2, 3 etc.)-->
+                    <td>{{name}}</td>   <!--DOES NOT REQUIRE DOT NOTATION to access element properties inside each-->
+                    <td>{{age}}</td>    <!--Properties are accessed implicitly when declared inside the 'each' statemet-->
+                    <td>{{occupation}}</td> <!--DOT NOTATION IS REQUIRED when used outside the scope of 'each'-->
+                    <td>{{company}}</td>
+                </tr>
+            {{/if}}
+            {{#unless contract}}   <!--Execute this block if 'data.contract' is false-->
+                <tr>
+                    <td colspan="5">User:'{{name}}' has hidden their information</td>
+                </tr>
+            {{/unless}}
+        {{/each}}
+    </table>
+
+    <h2>Custom Helpers using HandlebarsJS</h2>
+    {{#list data}}
+        Name: {{#strong}}{{name}}{{/strong}} Age: {{age}} Occupation: {{occupation}} Company: {{company}}
+    {{/list}}
+</body>
+
+
+<!--Important Note! 
+        To access a specific element use "data.[1].name" (Extra period between identifier and index)-->

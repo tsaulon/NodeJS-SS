@@ -1,0 +1,17 @@
+{
+  "name": "templating",
+  "version": "1.0.0",
+  "description": "Templating using HandlebarsJS",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Tyrone Saulon",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "path": "^0.12.7"
+  }
+}

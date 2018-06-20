@@ -1,3 +1,5 @@
+//TODO: Part 2: Rendering Images in the "/images" route
+
 //Custom Modules
 var data_service = require("./data-service.js");
 
@@ -23,8 +25,29 @@ const upload = multer({storage: storage});    //tell multer to use diskStorage f
 
 
 const exphbs = require("express-handlebars");   //install handlebars
-app.engine(".hbs", exphbs({extname: ".hbs", defaultLayout: "main"}));  //tell engine to use exphbs when handling ".hbs" extensions
+app.engine(".hbs", exphbs({extname: ".hbs", defaultLayout: "main", helpers: {
+    navLink: (url, options) => {
+        return "<li" + ((url == app.locals.activeRoute) ? " class='active'" : "") + `><a href=${url}>${options.fn(this)}</a></li>`;
+    },
+    equal: (lvalue, rvalue, options) => {
+        if(arguments.length < 3){
+            throw new Error("Handlebars Helper equal needs 2 parameters");
+        }
+        if(lvalue != rvalue){
+            return options.inverse(this);
+        } else{
+            return options.fn(this);
+        }
+    }
+}}));  //tell engine to use exphbs when handling ".hbs" extensions
 app.set("view engine", ".hbs");
+//set 'class=active' on active route.
+app.use((req, res, next) => {
+    let route = req.baseUrl + req.path;
+    app.locals.activeRoute = (route == "/") ? "/" : route.replace(/\/$/, "");
+    next();
+});
+
 
 
 app.get("/", (req, res) => {
@@ -117,8 +140,8 @@ app.get("/images", (req, res) => {
     //read contents of directory 'uploadDIR'
     //respond with contents in JSON format.
     fs.readdir(uploadDIR, (err, items) => {
-        res.setHeader("Content-Type", "application/json");
-        res.json({images: items});
+
+        res.render(path.join(__dirname, "/views/images.hbs"), {images: items});
     });
 });
 

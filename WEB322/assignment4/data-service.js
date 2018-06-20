@@ -44,10 +44,15 @@ module.exports.getDepartments = () => {
 
 module.exports.addEmployee = data => {
     return new Promise((resolve, reject) => {
-        data.isManager = (data.isManager == undefined) ? false : true;
-        data.employeeNum  = employees.length + 1;
-        employees.push(data);
-        resolve("Employee succesfully added!");
+        try{
+            data.isManager = (data.isManager == undefined) ? false : true;
+            data.employeeNum  = employees.length + 1;
+            employees.push(data);
+            resolve("Employee succesfully added!"); 
+        } catch(e){
+            reject(e);
+        }
+
     });
 }
 

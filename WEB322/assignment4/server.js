@@ -1,4 +1,4 @@
-//TODO: Part 2: Rendering Images in the "/images" route
+//TODO: Part 3: Updating the Employees Route & Adding a View
 
 //Custom Modules
 var data_service = require("./data-service.js");
@@ -41,6 +41,7 @@ app.engine(".hbs", exphbs({extname: ".hbs", defaultLayout: "main", helpers: {
     }
 }}));  //tell engine to use exphbs when handling ".hbs" extensions
 app.set("view engine", ".hbs");
+app.set("/views", path.join(__dirname, "/views"));
 //set 'class=active' on active route.
 app.use((req, res, next) => {
     let route = req.baseUrl + req.path;
@@ -81,25 +82,32 @@ app.get("/employees", (req, res) => {
         if(req.query.status){
             //if a status filter has been requested...
             data_service.getEmployeesByStatus(req.query.status).then(data => {
-                res.json(data);
-            }).catch(console.err);
+                res.render(path.join(__dirname, "/views/employees.hbs"), {employees: data});
+            }).catch(data => {
+                res.render(path.join(__dirname, "/views/employees.hbs"), {message: data});
+            }); 
         } else if(req.query.department){
             //if a department filter has been requested...
             data_service.getEmployeesByDepartment(req.query.department).then(data => {
-                res.json(data);
-            }).catch(console.err);
+                res.render(path.join(__dirname, "/views/employees.hbs"), {employees: data});
+            }).catch(data => {
+                res.render(path.join(__dirname, "/views/employees.hbs"), {message: data});
+            }); 
         } else if(req.query.manager){
             //if a manager filter has been requested...
             data_service.getEmployeesByManager(req.query.manager).then(data => {
-                res.json(data);
-            })
+                res.render(path.join(__dirname, "/views/employees.hbs"), {employees: data});
+            }).catch(data => {
+                res.render(path.join(__dirname, "/views/employees.hbs"), {message: data});
+            }); 
         }
 
     } else{
         data_service.getAllEmployees().then( data => {
-            res.setHeader("Content-Type", "application/json");
-            res.json(data)    
-        }).catch(console.err); 
+            res.render(path.join(__dirname, "/views/employees.hbs"), {employees: data});
+        }).catch(data => {
+            res.render(path.join(__dirname, "/views/employees.hbs"), {message: data});
+        }); 
     }    
 });
 

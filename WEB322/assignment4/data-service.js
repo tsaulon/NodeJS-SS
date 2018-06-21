@@ -108,3 +108,14 @@ module.exports.getEmployeeByNum = num => {
         }
     });
 }
+
+module.exports.updateEmployee = data => {
+    return new Promise((resolve, reject) => {
+        try{
+            employees[data.employeeNum - 1] = data;
+            resolve();
+        } catch(e){
+            reject(e.message);
+        } 
+    });
+}

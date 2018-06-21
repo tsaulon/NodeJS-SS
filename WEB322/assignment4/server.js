@@ -1,4 +1,4 @@
-//TODO: Part 3: Updating the Employees Route & Adding a View
+//TODO: Part 4: Updating the Departments Route & Adding a View
 
 //Custom Modules
 var data_service = require("./data-service.js");
@@ -67,9 +67,10 @@ app.get("/about", (req, res) => {
 
 app.get("/departments", (req, res) => {
     data_service.getDepartments().then( data => {
-        res.setHeader("Content-Type", "application/json");
-        res.json(data)    
-    }).catch(console.err);
+        res.render(path.join(__dirname, "/views/departments.hbs"), {departments: data});    
+    }).catch(data => {
+        res.render(path.join(__dirname, "/views/departments.hbs", {message: data}));
+    });
 });
 
 app.get("/employees", (req, res) => {
@@ -113,10 +114,17 @@ app.get("/employees", (req, res) => {
 
 app.get("/employee/:value", (req, res) => {
     data_service.getEmployeeByNum(req.params.value).then(data => {
-        res.json(data);
-    }).catch(console.err);
+        res.render(path.join(__dirname, "/views/employee.hbs"), {employee: data[0]});
+    }).catch(data => {
+        res.render(path.join(__dirname, "/views/employee.hbs"), {message: data});
+    });
 });
 
+app.post("/employee/update", (req, res) => {
+    data_service.updateEmployee(req.body).then(
+        res.redirect("/employees")
+    ).catch(console.err);
+});
 app.get("/managers", (req, res) => {
     data_service.getManagers().then( data => {
         res.setHeader("Content-Type", "application/json");

@@ -1,4 +1,4 @@
-//TODO: Part 4: Updating the Departments Route & Adding a View
+//TODO: Remove managers route (Is not needed anymore)
 
 //Custom Modules
 var data_service = require("./data-service.js");
